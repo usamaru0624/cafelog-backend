@@ -6,7 +6,7 @@ phases:
       java: corretto17
     commands:
       - echo Installing Maven...
-      - yum install -y maven
+      - yum install -y maven zip
 
   pre_build:
     commands:
@@ -20,12 +20,16 @@ phases:
 
   post_build:
     commands:
-      - echo Build completed on `date`
-      - ls -l target
+      - echo Packaging deployment artifacts...
+      - mkdir -p deploy/scripts
+      - cp -r scripts/* deploy/scripts/
+      - cp appspec.yml deploy/
+      - cp target/cafelog-0.0.1-SNAPSHOT.jar deploy/
+      - cd deploy && zip -r ../deploy-package.zip . && cd ..
+      - echo Uploading to S3...
+      - aws s3 cp deploy-package.zip s3://springboot-helloapp-deploy-2025/
 
-artifacts:  # ✅ phasesの外に書く
+artifacts:
   files:
-    - target/cafelog-0.0.1-SNAPSHOT.jar
-  discard-paths: yes
-  base-directory: target
+    - deploy-package.zip
 
