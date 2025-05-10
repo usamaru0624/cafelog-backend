@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿一覧 - カフェログ</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        img {
+            max-width: 100px;
+        }
+        button {
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>投稿一覧</h1>
+
+    <div style="margin-bottom: 20px;">
+        <a href="/posts/new" style="text-decoration: none;">
+            <button style="padding: 8px 16px; font-size: 16px;">☕ 新しい投稿をする</button>
+        </a>
+    </div>
+
+    <table>
+        <tr>
+            <!-- <th>ID</th> ← 非表示にするならコメントアウト -->
+            <th>タイトル</th>
+            <th>内容</th>
+            <th>画像</th>
+            <th>作成日時</th>
+            <th>操作</th>
+        </tr>
+            <tr th:each="post : ${posts}">
+            <td th:text="${post.id}">1</td>
+            <td th:text="${post.title}">タイトル</td>
+            <td th:text="${post.content}">内容</td>
+            <td>
+                <img th:if="${post.imageUrl}" th:src="${post.imageUrl}" alt="画像" style="max-height: 100px;" />
+                <span th:if="${post.imageUrl == null}">なし</span>
+            </td>
+            <td th:text="${post.createdAt}">日時</td>
+            <td>
+                    <form th:action="@{'/posts/delete/' + ${post.id}}" method="post" onsubmit="return confirm('本当に削除しますか？');">        
+		    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit">削除</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+

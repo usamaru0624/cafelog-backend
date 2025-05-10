@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿作成</title>
+</head>
+<body>
+<h1>新しい投稿</h1>
+<form th:action="@{/posts/form}" method="post" enctype="multipart/form-data">
+    <label for="title">タイトル:</label><br>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label for="content">内容:</label><br>
+    <textarea id="content" name="content" rows="5" cols="40" required></textarea><br><br>
+
+    <label for="image">画像ファイル:</label><br>
+    <input type="file" id="image" name="image" accept="image/*"><br><br>
+   
+    <button type="submit">投稿する</button>
+</form>
+</body>
+</html>
+
