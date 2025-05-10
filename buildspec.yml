@@ -23,7 +23,8 @@ phases:
       - echo Build completed on `date`
       - ls -l target
 
-artifacts:
-  files:
-    - target/*.jar
-
+  artifacts:
+    files:
+      - target/cafelog-0.0.1-SNAPSHOT.jar
+    discard-paths: yes
+    base-directory: target
