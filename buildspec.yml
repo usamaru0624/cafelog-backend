@@ -27,7 +27,7 @@ phases:
       - cp target/cafelog-0.0.1-SNAPSHOT.jar deploy/
       - cd deploy && zip -r ../deploy-package.zip . && cd ..
       - echo Uploading to S3...
-      - aws s3 cp deploy-package.zip s3://springboot-helloapp-deploy-2025/
+      - aws s3 cp deploy-package.zip s3://cafelog-s3-images/
 
 artifacts:
   files:
