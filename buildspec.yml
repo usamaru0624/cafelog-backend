@@ -18,18 +18,18 @@ phases:
       - echo Building project...
       - mvn package -DskipTests
 
-  post_build:
-    commands:
-      - echo Preparing deployment package...
-      - mkdir -p output
-      - cp -r scripts output/
-      - cp appspec.yml output/
-      - cp target/cafelog-0.0.1-SNAPSHOT.jar output/
-      - cd output
-      - zip -r ../deploy-package.zip .
-      - cd ..
-      - echo Uploading to S3...
-      - aws s3 cp deploy-package.zip s3://cafelog-s3-images/
+post_build:
+  commands:
+    - echo Preparing deployment package...
+    - mkdir -p output
+    - cp -r scripts output/
+    - cp appspec.yml output/
+    - cp target/cafelog-0.0.1-SNAPSHOT.jar output/
+    - cd output
+    - zip -r ../deploy-package.zip .
+    - cd ..
+    - echo Uploading to S3...
+    - aws s3 cp deploy-package.zip s3://cafelog-s3-images/
 artifacts:
   files:
     - deploy-package.zip
