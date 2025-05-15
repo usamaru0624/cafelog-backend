@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       java: corretto17
     commands:
-      - echo Installing Maven...
+      - echo Installing dependencies...
       - yum install -y maven zip
 
   pre_build:
@@ -32,6 +32,5 @@ phases:
       - aws s3 cp deploy-package.zip s3://cafelog-s3-images/
       
   artifacts:
-  files:
-    - deploy-package.zip
-
+    files:
+      - deploy-package.zip
