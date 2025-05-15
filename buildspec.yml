@@ -21,14 +21,12 @@ phases:
   post_build:
     commands:
       - echo Packaging deployment artifacts...
-      - mkdir -p deploy/scripts
-      - cp -r scripts/* deploy/scripts/
-      - cp appspec.yml deploy/
-      - cp target/cafelog-0.0.1-SNAPSHOT.jar deploy/
-      - cd deploy && zip -r ../deploy-package.zip . && cd ..
+      - cp -r scripts/ .                     # ← scriptsをルートへコピー
+      - cp appspec.yml .                    # ← appspecもルート
+      - cp target/cafelog-0.0.1-SNAPSHOT.jar .
+      - zip -r deploy-package.zip scripts appspec.yml cafelog-0.0.1-SNAPSHOT.jar
       - echo Uploading to S3...
       - aws s3 cp deploy-package.zip s3://cafelog-s3-images/
-
 artifacts:
   files:
     - deploy-package.zip
